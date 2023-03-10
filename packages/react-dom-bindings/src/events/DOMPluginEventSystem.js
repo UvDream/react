@@ -381,6 +381,7 @@ export function listenToNativeEventForNonManagedEventTarget(
 const listeningMarker = '_reactListening' + Math.random().toString(36).slice(2);
 
 export function listenToAllSupportedEvents(rootContainerElement: EventTarget) {
+  console.log("函数===>listenToAllSupportedEvents")
   if (!(rootContainerElement: any)[listeningMarker]) {
     (rootContainerElement: any)[listeningMarker] = true;
     allNativeEvents.forEach(domEventName => {

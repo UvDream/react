@@ -74,7 +74,6 @@ import {
   restoreStateIfNeeded,
 } from 'react-dom-bindings/src/events/ReactDOMControlledComponent';
 import Internals from '../ReactDOMSharedInternals';
-console.log("测试")
 export {preinit, preload} from 'react-dom-bindings/src/shared/ReactDOMFloat';
 
 setAttemptSynchronousHydration(attemptSynchronousHydration);
@@ -115,6 +114,7 @@ function createPortal(
   container: Element | DocumentFragment,
   key: ?string = null,
 ): React$Portal {
+  console.log("函数==>createPortal")
   if (!isValidContainer(container)) {
     throw new Error('Target container is not a DOM element.');
   }
@@ -130,6 +130,7 @@ function renderSubtreeIntoContainer(
   containerNode: Container,
   callback: ?Function,
 ): React$Component<any, any> | PublicInstance | null {
+  console.log("函数==>renderSubtreeIntoContainer")
   return unstable_renderSubtreeIntoContainer(
     parentComponent,
     element,
@@ -143,14 +144,14 @@ function createRoot(
   options?: CreateRootOptions,
 ): RootType {
   console.log("函数==>createRoot")
-  if (__DEV__) {
-    if (!Internals.usingClientEntryPoint && !__UMD__) {
-      console.error(
-        'You are importing createRoot from "react-dom" which is not supported. ' +
-          'You should instead import it from "react-dom/client".',
-      );
-    }
-  }
+  // if (__DEV__) {
+  //   if (!Internals.usingClientEntryPoint && !__UMD__) {
+  //     console.error(
+  //       'You are importing createRoot from "react-dom" which is not supported. ' +
+  //         'You should instead import it from "react-dom/client".',
+  //     );
+  //   }
+  // }
   return createRootImpl(container, options);
 }
 
@@ -159,6 +160,7 @@ function hydrateRoot(
   initialChildren: ReactNodeList,
   options?: HydrateRootOptions,
 ): RootType {
+  console.log("函数==>hydrateRoot")
   if (__DEV__) {
     if (!Internals.usingClientEntryPoint && !__UMD__) {
       console.error(

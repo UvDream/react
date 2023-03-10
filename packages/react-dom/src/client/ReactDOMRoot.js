@@ -183,11 +183,10 @@ export function createRoot(
   options?: CreateRootOptions,
 ): RootType {
   console.log("函数==>createRoot");
-  if (!isValidContainer(container)) {
-    throw new Error('createRoot(...): Target container is not a DOM element.');
-  }
-
-  warnIfReactDOMContainerInDEV(container);
+  // if (!isValidContainer(container)) {
+  //   throw new Error('createRoot(...): Target container is not a DOM element.');
+  // }
+  // warnIfReactDOMContainerInDEV(container);
 
   let isStrictMode = false;
   let concurrentUpdatesByDefaultOverride = false;
@@ -196,47 +195,52 @@ export function createRoot(
   let transitionCallbacks = null;
 
   if (options !== null && options !== undefined) {
-    if (__DEV__) {
-      if ((options: any).hydrate) {
-        console.warn(
-          'hydrate through createRoot is deprecated. Use ReactDOMClient.hydrateRoot(container, <App />) instead.',
-        );
-      } else {
-        if (
-          typeof options === 'object' &&
-          options !== null &&
-          (options: any).$$typeof === REACT_ELEMENT_TYPE
-        ) {
-          console.error(
-            'You passed a JSX element to createRoot. You probably meant to ' +
-              'call root.render instead. ' +
-              'Example usage:\n\n' +
-              '  let root = createRoot(domContainer);\n' +
-              '  root.render(<App />);',
-          );
-        }
-      }
-    }
+    // if (__DEV__) {
+    //   if ((options: any).hydrate) {
+    //     console.warn(
+    //       'hydrate through createRoot is deprecated. Use ReactDOMClient.hydrateRoot(container, <App />) instead.',
+    //     );
+    //   } else {
+    //     if (
+    //       typeof options === 'object' &&
+    //       options !== null &&
+    //       (options: any).$$typeof === REACT_ELEMENT_TYPE
+    //     ) {
+    //       console.error(
+    //         'You passed a JSX element to createRoot. You probably meant to ' +
+    //           'call root.render instead. ' +
+    //           'Example usage:\n\n' +
+    //           '  let root = createRoot(domContainer);\n' +
+    //           '  root.render(<App />);',
+    //       );
+    //     }
+    //   }
+    // }
+    //判断是否是严格模式
     if (options.unstable_strictMode === true) {
       isStrictMode = true;
     }
+    // 判断是否是并发模式
     if (
       allowConcurrentByDefault &&
       options.unstable_concurrentUpdatesByDefault === true
     ) {
       concurrentUpdatesByDefaultOverride = true;
     }
+    // 判断是否是开发模式
     if (options.identifierPrefix !== undefined) {
       identifierPrefix = options.identifierPrefix;
     }
+    // 判断是否是错误处理
     if (options.onRecoverableError !== undefined) {
       onRecoverableError = options.onRecoverableError;
     }
+    // 判断是否是过渡回调
     if (options.unstable_transitionCallbacks !== undefined) {
       transitionCallbacks = options.unstable_transitionCallbacks;
     }
   }
-
+  // 创建一个容器
   const root = createContainer(
     container,
     ConcurrentRoot,
@@ -280,6 +284,7 @@ export function hydrateRoot(
   initialChildren: ReactNodeList,
   options?: HydrateRootOptions,
 ): RootType {
+  console.log("函数==>hydrateRoot")
   if (!isValidContainer(container)) {
     throw new Error('hydrateRoot(...): Target container is not a DOM element.');
   }
@@ -359,6 +364,7 @@ export function hydrateRoot(
 }
 
 export function isValidContainer(node: any): boolean {
+  console.log("函数==>isValidContainer")
   return !!(
     node &&
     (node.nodeType === ELEMENT_NODE ||
@@ -373,6 +379,7 @@ export function isValidContainer(node: any): boolean {
 // TODO: Remove this function which also includes comment nodes.
 // We only use it in places that are currently more relaxed.
 export function isValidContainerLegacy(node: any): boolean {
+  console.log("函数==>isValidContainerLegacy")
   return !!(
     node &&
     (node.nodeType === ELEMENT_NODE ||
@@ -382,8 +389,9 @@ export function isValidContainerLegacy(node: any): boolean {
         (node: any).nodeValue === ' react-mount-point-unstable '))
   );
 }
-
+//  警告如果是ReactDOM容器
 function warnIfReactDOMContainerInDEV(container: any) {
+  console.log("函数==>warnIfReactDOMContainerInDEV")
   if (__DEV__) {
     if (
       container.nodeType === ELEMENT_NODE &&

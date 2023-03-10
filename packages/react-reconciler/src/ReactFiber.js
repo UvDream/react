@@ -138,6 +138,7 @@ function FiberNode(
   key: null | string,
   mode: TypeOfMode,
 ) {
+  console.log("函数==>FiberNode")
   // Instance
   this.tag = tag;
   this.key = key;
@@ -210,6 +211,8 @@ function FiberNode(
       Object.preventExtensions(this);
     }
   }
+
+
 }
 
 // This is a constructor function, rather than a POJO constructor, still
@@ -231,6 +234,7 @@ const createFiber = function (
   key: null | string,
   mode: TypeOfMode,
 ): Fiber {
+  console.log("函数==>createFiber")
   // $FlowFixMe: the shapes are exact here but Flow doesn't like constructors
   return new FiberNode(tag, pendingProps, key, mode);
 };
@@ -452,6 +456,7 @@ export function createHostRootFiber(
   isStrictMode: boolean,
   concurrentUpdatesByDefaultOverride: null | boolean,
 ): Fiber {
+  console.log("函数===>createHostRootFiber");
   let mode;
   if (tag === ConcurrentRoot) {
     mode = ConcurrentMode;
@@ -460,7 +465,6 @@ export function createHostRootFiber(
     }
     if (
       // We only use this flag for our repo tests to check both behaviors.
-      // TODO: Flip this flag and rename it something like "forceConcurrentByDefaultForTesting"
       !enableSyncDefaultUpdates ||
       // Only for internal experiments.
       (allowConcurrentByDefault && concurrentUpdatesByDefaultOverride)

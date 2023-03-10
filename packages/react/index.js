@@ -32,7 +32,9 @@ export type ChildrenArray<+T> = $ReadOnlyArray<ChildrenArray<T>> | T;
 export {
   __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED,
   act as unstable_act,
+  // 重要
   Children,
+  // 重要
   Component,
   Fragment,
   Profiler,
@@ -42,6 +44,7 @@ export {
   SuspenseList,
   cloneElement,
   createContext,
+  // 重要
   createElement,
   createFactory,
   createMutableSource,

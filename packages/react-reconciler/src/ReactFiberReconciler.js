@@ -142,6 +142,7 @@ if (__DEV__) {
 function getContextForSubtree(
   parentComponent: ?React$Component<any, any>,
 ): Object {
+  console.log("函数==>getContextForSubtree")
   if (!parentComponent) {
     return emptyContextObject;
   }
@@ -160,6 +161,7 @@ function getContextForSubtree(
 }
 
 function findHostInstance(component: Object): PublicInstance | null {
+  console.log("函数==>findHostInstance")
   const fiber = getInstance(component);
   if (fiber === undefined) {
     if (typeof component.render === 'function') {
@@ -182,6 +184,7 @@ function findHostInstanceWithWarning(
   component: Object,
   methodName: string,
 ): PublicInstance | null {
+  console.log("函数==>findHostInstanceWithWarning")
   if (__DEV__) {
     const fiber = getInstance(component);
     if (fiber === undefined) {
@@ -244,7 +247,7 @@ function findHostInstanceWithWarning(
   }
   return findHostInstance(component);
 }
-
+// 通过组件实例获取fiber
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,
@@ -255,8 +258,10 @@ export function createContainer(
   onRecoverableError: (error: mixed) => void,
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): OpaqueRoot {
+  console.log("函数==>createContainer");
   const hydrate = false;
   const initialChildren = null;
+  // 创建fiberRoot
   return createFiberRoot(
     containerInfo,
     tag,
@@ -284,6 +289,7 @@ export function createHydrationContainer(
   onRecoverableError: (error: mixed) => void,
   transitionCallbacks: null | TransitionTracingCallbacks,
 ): OpaqueRoot {
+  console.log("函数==>createHydrationContainer")
   const hydrate = true;
   const root = createFiberRoot(
     containerInfo,
@@ -325,6 +331,7 @@ export function updateContainer(
   parentComponent: ?React$Component<any, any>,
   callback: ?Function,
 ): Lane {
+  console.log("函数==>updateContainer")
   if (__DEV__) {
     onScheduleRoot(container, element);
   }
@@ -401,6 +408,7 @@ export {
 export function getPublicRootInstance(
   container: OpaqueRoot,
 ): React$Component<any, any> | PublicInstance | null {
+  console.log("函数==>getPublicRootInstance")
   const containerFiber = container.current;
   if (!containerFiber.child) {
     return null;
@@ -415,6 +423,7 @@ export function getPublicRootInstance(
 }
 
 export function attemptSynchronousHydration(fiber: Fiber): void {
+  console.log("函数==>attemptSynchronousHydration")
   switch (fiber.tag) {
     case HostRoot: {
       const root: FiberRoot = fiber.stateNode;
@@ -444,6 +453,7 @@ export function attemptSynchronousHydration(fiber: Fiber): void {
 }
 
 function markRetryLaneImpl(fiber: Fiber, retryLane: Lane) {
+  console.log("函数==>markRetryLaneImpl")
   const suspenseState: null | SuspenseState = fiber.memoizedState;
   if (suspenseState !== null && suspenseState.dehydrated !== null) {
     suspenseState.retryLane = higherPriorityLane(
@@ -455,6 +465,7 @@ function markRetryLaneImpl(fiber: Fiber, retryLane: Lane) {
 
 // Increases the priority of thenables when they resolve within this boundary.
 function markRetryLaneIfNotHydrated(fiber: Fiber, retryLane: Lane) {
+  console.log("函数==>markRetryLaneIfNotHydrated")
   markRetryLaneImpl(fiber, retryLane);
   const alternate = fiber.alternate;
   if (alternate) {
@@ -463,6 +474,7 @@ function markRetryLaneIfNotHydrated(fiber: Fiber, retryLane: Lane) {
 }
 
 export function attemptDiscreteHydration(fiber: Fiber): void {
+  console.log("函数==>attemptDiscreteHydration")
   if (fiber.tag !== SuspenseComponent) {
     // We ignore HostRoots here because we can't increase
     // their priority and they should not suspend on I/O,
@@ -480,6 +492,7 @@ export function attemptDiscreteHydration(fiber: Fiber): void {
 }
 
 export function attemptContinuousHydration(fiber: Fiber): void {
+  console.log("函数==>attemptContinuousHydration")
   if (fiber.tag !== SuspenseComponent) {
     // We ignore HostRoots here because we can't increase
     // their priority and they should not suspend on I/O,
@@ -497,6 +510,7 @@ export function attemptContinuousHydration(fiber: Fiber): void {
 }
 
 export function attemptHydrationAtCurrentPriority(fiber: Fiber): void {
+  console.log("函数==>attemptHydrationAtCurrentPriority")
   if (fiber.tag !== SuspenseComponent) {
     // We ignore HostRoots here because we can't increase
     // their priority other than synchronously flush it.
@@ -520,6 +534,7 @@ export {findHostInstanceWithWarning};
 export function findHostInstanceWithNoPortals(
   fiber: Fiber,
 ): PublicInstance | null {
+  console.log("函数==>findHostInstanceWithNoPortals")
   const hostFiber = findCurrentHostFiberWithNoPortals(fiber);
   if (hostFiber === null) {
     return null;
@@ -530,12 +545,14 @@ export function findHostInstanceWithNoPortals(
 let shouldErrorImpl: Fiber => ?boolean = fiber => null;
 
 export function shouldError(fiber: Fiber): ?boolean {
+  console.log("函数==>shouldError")
   return shouldErrorImpl(fiber);
 }
 
 let shouldSuspendImpl = (fiber: Fiber) => false;
 
 export function shouldSuspend(fiber: Fiber): boolean {
+  console.log("函数==>shouldSuspend")
   return shouldSuspendImpl(fiber);
 }
 
@@ -574,6 +591,7 @@ if (__DEV__) {
     obj: Object | Array<any>,
     path: Array<string | number>,
   ): Object | Array<any> => {
+    console.log("函数==>copyWithDelete")
     return copyWithDeleteImpl(obj, path, 0);
   };
 
@@ -583,6 +601,7 @@ if (__DEV__) {
     newPath: Array<string | number>,
     index: number,
   ) => {
+    console.log("函数==>copyWithRenameImpl")
     const oldKey = oldPath[index];
     const updated = isArray(obj) ? obj.slice() : {...obj};
     if (index + 1 === oldPath.length) {
@@ -612,6 +631,7 @@ if (__DEV__) {
     oldPath: Array<string | number>,
     newPath: Array<string | number>,
   ): Object | Array<any> => {
+    console.log("函数==>copyWithRename")
     if (oldPath.length !== newPath.length) {
       console.warn('copyWithRename() expects paths of the same length');
       return;
@@ -634,6 +654,7 @@ if (__DEV__) {
     index: number,
     value: any,
   ) => {
+    console.log("函数==>copyWithSetImpl")
     if (index >= path.length) {
       return value;
     }
@@ -649,10 +670,12 @@ if (__DEV__) {
     path: Array<string | number>,
     value: any,
   ): Object | Array<any> => {
+    console.log("函数==>copyWithSet")
     return copyWithSetImpl(obj, path, 0, value);
   };
 
   const findHook = (fiber: Fiber, id: number) => {
+    console.log("函数==>findHook")
     // For now, the "id" of stateful hooks is just the stateful hook index.
     // This may change in the future with e.g. nested hooks.
     let currentHook = fiber.memoizedState;
@@ -670,6 +693,7 @@ if (__DEV__) {
     path: Array<string | number>,
     value: any,
   ) => {
+    console.log("函数==>overrideHookState")
     const hook = findHook(fiber, id);
     if (hook !== null) {
       const newState = copyWithSet(hook.memoizedState, path, value);
@@ -694,6 +718,7 @@ if (__DEV__) {
     id: number,
     path: Array<string | number>,
   ) => {
+    console.log("函数==>overrideHookStateDeletePath")
     const hook = findHook(fiber, id);
     if (hook !== null) {
       const newState = copyWithDelete(hook.memoizedState, path);
@@ -719,6 +744,7 @@ if (__DEV__) {
     oldPath: Array<string | number>,
     newPath: Array<string | number>,
   ) => {
+    console.log("函数==>overrideHookStateRenamePath")
     const hook = findHook(fiber, id);
     if (hook !== null) {
       const newState = copyWithRename(hook.memoizedState, oldPath, newPath);
@@ -741,6 +767,7 @@ if (__DEV__) {
 
   // Support DevTools props for function components, forwardRef, memo, host components, etc.
   overrideProps = (fiber: Fiber, path: Array<string | number>, value: any) => {
+    console.log("函数==>overrideProps")
     fiber.pendingProps = copyWithSet(fiber.memoizedProps, path, value);
     if (fiber.alternate) {
       fiber.alternate.pendingProps = fiber.pendingProps;
@@ -751,6 +778,7 @@ if (__DEV__) {
     }
   };
   overridePropsDeletePath = (fiber: Fiber, path: Array<string | number>) => {
+    console.log("函数==>overridePropsDeletePath")
     fiber.pendingProps = copyWithDelete(fiber.memoizedProps, path);
     if (fiber.alternate) {
       fiber.alternate.pendingProps = fiber.pendingProps;
@@ -765,6 +793,7 @@ if (__DEV__) {
     oldPath: Array<string | number>,
     newPath: Array<string | number>,
   ) => {
+    console.log("函数==>overridePropsRenamePath")
     fiber.pendingProps = copyWithRename(fiber.memoizedProps, oldPath, newPath);
     if (fiber.alternate) {
       fiber.alternate.pendingProps = fiber.pendingProps;
@@ -776,6 +805,7 @@ if (__DEV__) {
   };
 
   scheduleUpdate = (fiber: Fiber) => {
+    console.log("函数==>scheduleUpdate")
     const root = enqueueConcurrentRenderForLane(fiber, SyncLane);
     if (root !== null) {
       scheduleUpdateOnFiber(root, fiber, SyncLane, NoTimestamp);
@@ -792,6 +822,7 @@ if (__DEV__) {
 }
 
 function findHostInstanceByFiber(fiber: Fiber): Instance | TextInstance | null {
+  console.log("函数==>findHostInstanceByFiber")
   const hostFiber = findCurrentHostFiber(fiber);
   if (hostFiber === null) {
     return null;
@@ -810,6 +841,7 @@ function getCurrentFiberForDevTools() {
 }
 
 export function injectIntoDevTools(devToolsConfig: DevToolsConfig): boolean {
+  console.log("函数==>injectIntoDevTools")
   const {findFiberByHostInstance} = devToolsConfig;
   const {ReactCurrentDispatcher} = ReactSharedInternals;
 
